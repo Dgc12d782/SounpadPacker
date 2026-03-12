@@ -5,15 +5,15 @@ import xml.etree.ElementTree as ET
 from pydub import AudioSegment
 
 def process_playlist():
-    # asking shit
+    # Ask the user for the paths
     spl_input = input("Enter filename or path to .spl file: ").strip().strip('"')
     target_dir = input("Enter your target directory path: ").strip().strip('"')
     
-    
+    # Convert or no
     convert_choice = input("Do you want to convert non-MP3 files to MP3? (y/n): ").strip().lower()
     do_convert = convert_choice == 'y'
     
-   
+    # Calling the main function: convert or no
     run_processing(spl_input, target_dir, do_convert)
 
 def run_processing(spl_path, target_dir, do_convert):
@@ -50,7 +50,7 @@ def run_processing(spl_path, target_dir, do_convert):
             base_name = os.path.basename(old_path)
             name, ext = os.path.splitext(base_name)
             
-           # If you need to convert
+            # Converting ONLY if the user selected y
             should_convert = do_convert and ext.lower() not in ['.mp3']
             
             target_ext = '.mp3' if should_convert else ext.lower()
@@ -65,7 +65,7 @@ def run_processing(spl_path, target_dir, do_convert):
             
             try:
                 if should_convert:
-                    print(f"[*] #{index}/{total_count} Converting {base_name} to MP3...") # Пишем converting...
+                    print(f"[*] #{index}/{total_count} Converting {base_name} to MP3...") # outputing converting...
                     audio = AudioSegment.from_file(old_path)
                     audio.export(dest_path, format="mp3")
                     status = "CONVERTED"
@@ -94,5 +94,4 @@ def run_processing(spl_path, target_dir, do_convert):
         print(f"Error when working with script: {e}")
 
 if __name__ == "__main__":
-
     process_playlist()
