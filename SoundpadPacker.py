@@ -5,15 +5,15 @@ import xml.etree.ElementTree as ET
 from pydub import AudioSegment
 
 def process_playlist():
-    # Запрашиваем пути у пользователя
+    # asking shit
     spl_input = input("Enter filename or path to .spl file: ").strip().strip('"')
     target_dir = input("Enter your target directory path: ").strip().strip('"')
     
-    # Новый запрос: конвертировать или нет
+    
     convert_choice = input("Do you want to convert non-MP3 files to MP3? (y/n): ").strip().lower()
     do_convert = convert_choice == 'y'
     
-    # Вызываем основную функцию обработки, передаем флаг конвертации
+   
     run_processing(spl_input, target_dir, do_convert)
 
 def run_processing(spl_path, target_dir, do_convert):
@@ -31,7 +31,7 @@ def run_processing(spl_path, target_dir, do_convert):
         sounds = root.findall('Sound')
         total_count = len(sounds) 
         
-        # Исправлено: путь к папке с SPL
+        
         spl_dir = os.path.dirname(os.path.abspath(spl_path))
         
         print(f"[*] Starting to process files...")
@@ -50,8 +50,7 @@ def run_processing(spl_path, target_dir, do_convert):
             base_name = os.path.basename(old_path)
             name, ext = os.path.splitext(base_name)
             
-            # Определяем, будем ли реально конвертировать
-            # Конвертируем ТОЛЬКО если пользователь нажал 'y' И файл не mp3
+           # If you need to convert
             should_convert = do_convert and ext.lower() not in ['.mp3']
             
             target_ext = '.mp3' if should_convert else ext.lower()
@@ -95,4 +94,5 @@ def run_processing(spl_path, target_dir, do_convert):
         print(f"Error when working with script: {e}")
 
 if __name__ == "__main__":
+
     process_playlist()
